@@ -359,7 +359,10 @@
     panel.style = "position:fixed; top:20px; right:20px; z-index:999999; background:white; padding:15px; border:2px solid #0073b1; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.3); font-family:Arial,sans-serif; width:200px;";
 
     panel.innerHTML = `
-      <h4 style="margin:0 0 10px 0; color:#0073b1; font-size:14px; text-align:center;">Pro Recruiter</h4>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <h4 style="margin:0; color:#0073b1; font-size:14px;">Pro Recruiter</h4>
+        <button id="cerrar-panel-ia" style="background:none; border:none; color:#666; cursor:pointer; font-size:18px; line-height:1;">&times;</button>
+      </div>
       
       <label style="font-size:10px; color:#666;">Ubicación exacta:</label>
       <input type="text" id="input-ubicacion-manual" placeholder="Ej: Ciudad de México" style="width:90%; margin-bottom:10px; padding:5px; border:1px solid #ccc; border-radius:4px;">
@@ -368,11 +371,22 @@
       <input type="number" id="input-limite" value="50" style="width:90%; margin-bottom:10px; padding:5px; border:1px solid #ccc; border-radius:4px;">
     
       <button id="btn-run-scrape" style="width:100%; padding:10px; background:#0073b1; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:bold; margin-bottom:5px;">Extraer candidatos</button>
+      <button id="btn-stop-scrape" style="width:100%; padding:8px; background:#666; color:white; border:none; border-radius:5px; cursor:pointer; font-weight:bold; margin-bottom:5px;">Detener</button>
     
       <div id="contador-eterno" style="font-size:10px; color:#666; margin-top:5px; text-align:center;"></div>
       <div id="status-ia-text" style="font-size:10px; color:#0073b1; margin-top:5px; text-align:center; font-weight:bold;"></div>
-    `;;
+    `;
     document.body.appendChild(panel);
+
+    // Acción para cerrar el panel
+    document.getElementById('cerrar-panel-ia').onclick = () => panel.remove();
+
+    // Acción para detener el scraping
+    document.getElementById('btn-stop-scrape').onclick = async () => {
+      await chrome.storage.local.set({ auto_scraping_activo: false });
+      document.getElementById('status-ia-text').innerText = "🛑 Detenido";
+      alert("El proceso automático se ha detenido.");
+    };
 
     // Al hacer clic, llamamos a la función asíncrona
     document.getElementById('btn-run-scrape').addEventListener('click', async () => {
@@ -388,21 +402,6 @@
         limite_candidatos: limiteUser,
         filtro_ubicacion_manual: ubicacionManual
       });
-
-      // // Añade estos eventos justo debajo de los que ya tienes:
-      // document.getElementById('btn-ver-historial').onclick = async () => {
-      //   const data = await chrome.storage.local.get(['historial_total_urls']);
-      //   const total = data.historial_total_urls ? data.historial_total_urls.length : 0;
-      //   alert(`Has guardado ${total} candidatos únicos en total desde que instalaste la extensión.`);
-      // };
-
-      // document.getElementById('btn-limpiar-eterno').onclick = async () => {
-      //   if (confirm("¿Seguro? Esto hará que la IA vuelva a marcar candidatos que ya habías visto antes.")) {
-      //     await chrome.storage.local.set({ historial_total_urls: [] });
-      //     alert("Historial eterno borrado.");
-      //     location.reload();
-      //   }
-      // };
 
       // Función para actualizar el contador visual
       const actualizarContador = async () => {
