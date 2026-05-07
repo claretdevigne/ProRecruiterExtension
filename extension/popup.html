@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { width: 400px; font-family: Arial, sans-serif; padding: 15px; }
+        h3 { color: #0073b1; margin-top: 0; }
+        .table-container { max-height: 300px; overflow-y: auto; border: 1px solid #eee; }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        th { background: #f4f4f4; position: sticky; top: 0; padding: 8px; text-align: left; }
+        td { padding: 8px; border-bottom: 1px solid #eee; word-break: break-word; }
+        .actions { margin-top: 15px; display: flex; gap: 10px; }
+        button { flex: 1; padding: 10px; cursor: pointer; border-radius: 5px; border: none; font-weight: bold; }
+        .btn-copy { background: #0073b1; color: white; }
+        .btn-delete { background: #ff4d4d; color: white; }
+    </style>
+</head>
+<body>
+    <h3>Candidatos Extraídos</h3>
+    <div id="contador" style="font-size: 14px; margin-bottom: 10px; font-weight: bold;">Total: 0</div>
+    
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Perfil</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-cuerpo">
+                </tbody>
+        </table>
+    </div>
+
+    <div class="actions">
+        <button id="btn-copy" class="btn-copy">Copiar todo (Excel)</button>
+        <button id="btn-clear" class="btn-delete">Limpiar lista</button>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
