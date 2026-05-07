@@ -365,7 +365,10 @@
       </div>
       
       <label style="font-size:10px; color:#666;">Ubicación exacta:</label>
-      <input type="text" id="input-ubicacion-manual" placeholder="Ej: Ciudad de México" style="width:90%; margin-bottom:10px; padding:5px; border:1px solid #ccc; border-radius:4px;">
+      <input type="text" id="input-ubicacion-manual" 
+        value="${urlParams.get('ubicación') || ''}" 
+        placeholder="Ej: Ciudad de México" 
+        style="width:90%; margin-bottom:10px; padding:5px; border:1px solid #ccc; border-radius:4px;">
       
       <label style="font-size:10px; color:#666;">Meta candidatos:</label>
       <input type="number" id="input-limite" value="50" style="width:90%; margin-bottom:10px; padding:5px; border:1px solid #ccc; border-radius:4px;">
